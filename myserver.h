@@ -1,14 +1,20 @@
 #ifndef MYSERVER_H
 #define MYSERVER_H
 
+
+
 #include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QByteArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QJsonParseError>
 #include <QFile>
+#include <QList>
+#include <QTime>
+#include "classmessege.h"
 
 class myserver : public QTcpServer
 {
@@ -22,11 +28,12 @@ public slots:
     void onDisconnected();
 public:
     QTcpSocket* socket;
-    QByteArray data;
+    QByteArray bData;
 
     QJsonDocument doc;
     QJsonParseError docError;
-
+private:
+    MessegeController controller;
 };
 
 #endif // MYSERVER_H

@@ -20,8 +20,6 @@ void myserver::incomingConnection(qintptr socketDescriptor)
     qDebug() << socketDescriptor << "Client connected.";
     socket->write("{\"type\":\"connect\",\"status\":\"True\"}");
     qDebug() << "Send client connect status: True";
-
-
 }
 
 void myserver::startServer()
@@ -29,22 +27,37 @@ void myserver::startServer()
 }
 
 void myserver::onReadyRead()
-{
-    //QTcpSocket* socket = qobject_cast<QTcpSocket*>(sender());
-    //qDebug() << socket->readAll();
-    data = socket->readAll();
-    qDebug() << data;
-     doc = QJsonDocument::fromJson(data, &docError);
-     if(docError.errorString().toInt() == QJsonParseError::NoError){
+{ 
+//    QString request = socket->readAll();
+//    qDebug() << request;
+//     if(docError.errorString().toInt() == QJsonParseError::NoError){
+//         socket->write("HTTP/1.1 200 OK\r\n\r\n");
+//         if(request.startsWith("GET")){
+//             socket->write(controller.getlist());
+//         }
+//         else if(request.startsWith("PUT")){
+//             QString data = request.section("\r\n\r\n",1,1);
+//             controller.append(data.toUtf8());
+//         }
+//         else if(request.startsWith("DELETE")){
+//             controller.clearList();
+//         }
+//     }
+//old
+     bData  = socket->readAll();
+     doc = QJsonDocument::fromJson(bData, &docError);
+       if(docError.errorString().toInt() == QJsonParseError::NoError){
          if((doc.object().value("type").toString() == "select") && (doc.object().value("params").toString() == "TestFish")){
              QFile file;
-             file.setFileName("C:\\TestFish.json");
+             file.setFileName("C:\\TestFish2.json");
              if(file.open(QIODevice::ReadOnly|QFile::Text)){
+                 qDebug() << "file is open!";
                  QByteArray fromFile = file.readAll();
                  QByteArray itog = "{\"type\":\"resultSelect\",\"result\":" + fromFile + "}";
                  socket->write(itog);
                  socket->waitForBytesWritten(250);
              }
+             else qDebug() <<" fail open file";
              file.close();         }
      }
 }
@@ -54,53 +67,3 @@ void myserver::onDisconnected()
     qDebug() << "Disconnect";
     socket->deleteLater();  //сокет удалится приложением, когда это будет возможно
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
