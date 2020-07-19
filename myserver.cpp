@@ -22,10 +22,6 @@ void myserver::incomingConnection(qintptr socketDescriptor)
     qDebug() << "Send client connect status: True";
 }
 
-void myserver::startServer()
-{
-}
-
 void myserver::onReadyRead()
 { 
 //    QString request = socket->readAll();

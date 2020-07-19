@@ -22,7 +22,6 @@ class myserver : public QTcpServer
 public:
     explicit myserver(QObject *parent = 0);
     void incomingConnection(qintptr socketDescriptor) override; //действия при подлкючении нового клиента
-    void startServer();
 public slots:
     void onReadyRead();
     void onDisconnected();
