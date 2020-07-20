@@ -47,7 +47,7 @@ void myserver::onReadyRead()
              QFile file;
              file.setFileName("C:\\TestFish2.json");
              if(file.open(QIODevice::ReadOnly|QFile::Text)){
-                 qDebug() << "file is open!";
+                 //qDebug() << "file is open!";
                  QByteArray fromFile = file.readAll();
                  QByteArray itog = "{\"type\":\"resultSelect\",\"result\":" + fromFile + "}";
                  socket->write(itog);
